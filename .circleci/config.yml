@@ -28,7 +28,9 @@ jobs:
           command: |
             node server.js
           background: true
-      - run: curl http://localhost:8080
+      - run: |
+          sleep 5
+          curl http://localhost:8080
       - run: npm run test-chrome
       - run: npm run test-firefox
  
