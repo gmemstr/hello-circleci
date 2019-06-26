@@ -24,7 +24,7 @@ jobs:
       # Install Chrome
       - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
       - run: sudo dpkg -i /tmp/chrome.deb
-      - run: npm start &
+      - run: node server.js&
       - run: npm run test-chrome
       - run: npm run test-firefox
  
