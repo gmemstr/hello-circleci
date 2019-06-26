@@ -13,12 +13,16 @@ jobs:
             - .
   test:
     docker:
-      - image: circleci/node:jessie-browsers
+      - image: circleci/node:11.15.0-stretch-browsers
     steps:
       - attach_workspace:
           at: .
-      - run: google-chrome --version
-      - run: chromedriver --version
+      # Install dependencies
+      - run: sudo apt-get update
+      - run: sudo apt-get install libnss3 libgconf-2-4
+      # Install Chrome
+      - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
+      - run: sudo dpkg -i /tmp/chrome.deb
       - run: nohup npm start &
       - run: npm run test-chrome
       - run: npm run test-firefox
