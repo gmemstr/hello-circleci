@@ -1,16 +1,16 @@
 version: 2
 jobs:
   build:
-    working_directory: /hello-world
+    working_directory: /tmp/hello-world
     docker:
       - image: circleci/node:latest
     steps:
       - checkout
       - run: npm install
       - store_artifacts:
-          path:  /hello-world
+          path:  /tmp/hello-world
       - persist_to_workspace:
-          root: /hello-world
+          root: /tmp/hello-world
           paths:
             - .
   test:
