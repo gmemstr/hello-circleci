@@ -17,14 +17,12 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: ls -alh
       - run: 
           command: |
             node server.js
           background: true
-      - run: |
-          sleep 5
-          curl http://localhost:8080
+      # Wait for server to come online
+      - run: sleep 2
       - run: npm run test-chrome
       - run: npm run test-firefox
  
