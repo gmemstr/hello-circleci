@@ -18,6 +18,7 @@ jobs:
       - attach_workspace:
           at: .
       - run: google-chrome --version
+      - run: chromedriver --version
       - run: nohup npm start &
       - run: npm run test-chrome
       - run: npm run test-firefox
