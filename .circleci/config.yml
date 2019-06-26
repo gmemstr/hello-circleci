@@ -25,7 +25,8 @@ jobs:
       - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
       - run: sudo dpkg -i /tmp/chrome.deb
       - run: 
-          command: node server.js
+          command: |
+            node server.js
           background: true
       - run: curl http://localhost:8080
       - run: npm run test-chrome
