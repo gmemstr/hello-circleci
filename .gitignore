@@ -1,0 +1,4 @@
+chromedriver.log
+geckodriver.log
+tests_output/
+node_modules/
