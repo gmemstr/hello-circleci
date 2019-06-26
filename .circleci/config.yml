@@ -13,19 +13,11 @@ jobs:
             - .
   test:
     docker:
-      - image: circleci/node:latest
+      - image: circleci/node:jessie-browsers
     steps:
       - attach_workspace:
           at: .
-      # Install dependencies
-      - run: sudo apt-get update
-      - run: sudo apt-get install libnss3 libgconf-2-4
-      # Install Chrome
-      - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
-      - run: sudo dpkg -i /tmp/chrome.deb
-      # Install Firefox
-      - run: wget http://ftp.us.debian.org/debian/pool/main/f/firefox/firefox_67.0.4-1_amd64.deb -O /tmp/firefox.deb
-      - run: sudo dpkg -i /tmp/firefox.deb
+      - run: google-chrome --version
       - run: nohup npm start &
       - run: npm run test-chrome
       - run: npm run test-firefox
