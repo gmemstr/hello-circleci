@@ -2,6 +2,11 @@
 const http = require('http');
 const fs = require('fs');
 
+let port = process.env.PORT;
+if (!port || port == '') {
+    port = 8080;
+}
+
 console.log("Starting up server")
 
 fs.readFile('index.html', function (err, html) {
@@ -15,5 +20,5 @@ fs.readFile('index.html', function (err, html) {
         response.write(html);
         response.end();
     });
-    server.listen(8080, () => { console.log("Listening on port 8080") });
+    server.listen(port, () => { console.log(`Listening on port ${port}`) });
 });
