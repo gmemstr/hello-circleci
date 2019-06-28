@@ -6,7 +6,14 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - node-modules-cache
       - run: npm i
+      - save_cache:
+          key: node-modules-cache
+          paths:
+            - node_modules/
       - persist_to_workspace:
           root: /tmp/hello-world
           paths:
