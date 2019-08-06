@@ -1,4 +1,24 @@
 version: 2
+
+commands:
+  npm_test:
+    description: "NPM run command with basic server"
+    parameters:
+      test:
+        type: string
+        default: ""
+      server:
+        type: string
+        default: "server.js"
+    steps:
+      - run: 
+          command: |
+            node <<parameters.server>>
+          background: true
+      # Wait for server to come online
+      - run: sleep 2
+      - run: npm run <<parameters.test>>
+
 jobs:
   build:
     working_directory: /tmp/hello-world
@@ -25,13 +45,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: 
-          command: |
-            node server.js
-          background: true
-      # Wait for server to come online
-      - run: sleep 2
-      - run: npm run test-chrome
+      - npm_test:
+          test: test-chrome
 
   test_firefox:
     docker:
@@ -39,13 +54,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run: 
-          command: |
-            node server.js
-          background: true
-      # Wait for server to come online
-      - run: sleep 2
-      - run: npm run test-firefox
+      - npm_test:
+          test: test-firefox
 
   deploy:
     docker:
