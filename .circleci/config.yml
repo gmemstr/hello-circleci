@@ -18,7 +18,8 @@ jobs:
           root: /tmp/hello-world
           paths:
             - .
-  test:
+
+  test_chrome:
     docker:
       - image: circleci/node:11.15.0-stretch-browsers
     steps:
@@ -31,7 +32,21 @@ jobs:
       # Wait for server to come online
       - run: sleep 2
       - run: npm run test-chrome
+
+  test_firefox:
+    docker:
+      - image: circleci/node:11.15.0-stretch-browsers
+    steps:
+      - attach_workspace:
+          at: .
+      - run: 
+          command: |
+            node server.js
+          background: true
+      # Wait for server to come online
+      - run: sleep 2
       - run: npm run test-firefox
+
   deploy:
     docker:
       - image: buildpack-deps:trusty
@@ -47,7 +62,13 @@ workflows:
   build-test-deploy:
     jobs:
       - build
-      - test:
+      - test_chrome:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - test_firefox:
           requires:
             - build
           filters:
@@ -55,7 +76,8 @@ workflows:
               only: master
       - deploy:
           requires:
-            - test
+            - test_chrome
+            - test_firefox
           filters:
             branches:
               only: master
